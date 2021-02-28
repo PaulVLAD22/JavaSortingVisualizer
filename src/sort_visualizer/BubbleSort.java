@@ -19,7 +19,7 @@ public class BubbleSort extends JPanel {
         a.setSize(900, 600);
         a.setVisible(true);
         a.setLocationRelativeTo(null);
-        a.setTitle("BubbleSort Visualizer");
+        a.setTitle("Bubblesort Visualizer");
         a.add(b);
         b.array = generateArray(elemNr,minVal,maxVal);
 
