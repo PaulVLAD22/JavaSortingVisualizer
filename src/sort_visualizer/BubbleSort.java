@@ -19,6 +19,7 @@ public class BubbleSort extends JPanel {
         a.setSize(900, 600);
         a.setVisible(true);
         a.setLocationRelativeTo(null);
+        a.setTitle("BubbleSort Visualizer");
         a.add(b);
         b.array = generateArray(elemNr,minVal,maxVal);
 
@@ -49,12 +50,7 @@ public class BubbleSort extends JPanel {
         }
     }
     public void sort(){
-        try{
-            Thread.sleep(100);
-            this.repaint();
-        }catch(Exception e){
 
-        }
         for (int i=0;i<array.length-1;i++) {
             for (int j = i + 1; j < array.length; j++) {
                 if (array[i] > array[j]) {
@@ -63,7 +59,7 @@ public class BubbleSort extends JPanel {
                     array[i]= array[j];
                     array[j]=c;
                     try{
-                        Thread.sleep(10);
+                        Thread.sleep(5);
                         this.repaint();
                     }catch(Exception e){
 
