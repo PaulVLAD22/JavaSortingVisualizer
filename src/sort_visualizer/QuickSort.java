@@ -5,13 +5,12 @@ import java.awt.*;
 import java.util.Random;
 
 public class QuickSort extends JPanel {
-    int selected=0;
-    int [] array;
-    int frameWidth=900;
+    int[] array;
+    int frameWidth = 800;
 
-    public static void main(String [] args){
+    public static void main(String[] args) {
         //index
-        int elemNr=100,minVal=100, maxVal=400;
+        int elemNr = 100, minVal = 100, maxVal = 400;
 
         JFrame a = new JFrame();
         QuickSort b = new QuickSort();
@@ -20,52 +19,75 @@ public class QuickSort extends JPanel {
         a.setVisible(true);
         a.setLocationRelativeTo(null);
         a.add(b);
-        b.array = generateArray(elemNr,minVal,maxVal);
+        b.array = generateArray(elemNr, minVal, maxVal);
 
-        int [] array=b.array;
+        int[] array = b.array;
 
-        b.sort();
+        b.sort(array, 0, array.length - 1);
     }
 
     private static int[] generateArray(int elemNr, int minVal, int maxVal) {
         Random rand = new Random();
-        int [] arr = new int [elemNr];
-        for (int i=0;i<elemNr;i++){
-            arr[i]=rand.nextInt(maxVal-minVal)+minVal;
+        int[] arr = new int[elemNr];
+        for (int i = 0; i < elemNr; i++) {
+            arr[i] = rand.nextInt(maxVal - minVal) + minVal;
         }
         return arr;
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         super.paint(g);
-        g.fillRect(0,0,900,600);
-        double elementWidth = (double)frameWidth/array.length;
-        for (int i=0;i<array.length;i++){
-            if (selected==i)
-                g.setColor(Color.green);
-            else
-                g.setColor(Color.black);
-            g.drawRect((int)Math.floor(elementWidth*(i)),600-array[i],(int)Math.floor(elementWidth),array[i]);
-            g.fillRect((int)Math.floor(elementWidth*(i)),600-array[i],(int)Math.floor(elementWidth),array[i]);
+        g.fillRect(0, 0, 900, 600);
+        double elementWidth = (double) frameWidth / array.length;
+        g.setColor(Color.white);
+        for (int i = 0; i < array.length; i++) {
+            g.drawRect(40 + (int) Math.floor(elementWidth * (i)), 500 - array[i], (int) Math.floor(elementWidth), array[i]);
+            //g.fillRect((int)Math.floor(elementWidth*(i)),600-array[i],(int)Math.floor(elementWidth),array[i]);
         }
     }
-    public void sort(){
-        for (int i=0;i<array.length-1;i++) {
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[i] > array[j]) {
-                    selected=j;
-                    int c =array[i];
-                    array[i]= array[j];
-                    array[j]=c;
-                    try{
-                        Thread.sleep(1);
-                        this.repaint();
-                    }catch(Exception e){
 
-                    }
+    public void swap(int arr[], int i, int j) {
+        int swapTemp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = swapTemp;
+    }
+
+    public void sort(int[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+            //sorting the smaller elements and the bigger
+            sort(arr, begin, partitionIndex - 1);
+            try {
+                Thread.sleep(20);
+                this.repaint();
+            } catch (Exception e) {
+
+            }
+            sort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private int partition(int[] arr, int begin, int end) {
+        //choosing the pivot as the last element
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                try {
+                    Thread.sleep(20);
+                    this.repaint();
+                } catch (Exception e) {
+
                 }
+                //placing the smaller elements at the start of the array
+                swap(arr, i, j);
             }
         }
+        //placing the pivot before the first element with higher value
+        swap(arr, i + 1, end);
+        return i + 1;
     }
 
 
